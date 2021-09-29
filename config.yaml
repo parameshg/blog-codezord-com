@@ -41,6 +41,21 @@ params:
     edit: "Edit this page &rarr;"
     truncated: "&hellip;"
 
+deployment:
+  order: [".jpg$", ".gif$"]
+  targets:
+    - name: prod
+      URL: s3://blog.codezord.com?region=us-west-2
+  matchers:
+    - pattern: "^.+\\.(js|css|svg|ttf)$"
+      cacheControl: max-age=3600, no-transform, public
+      gzip: true
+    - pattern: "^.+\\.(png|jpg)$"
+      cacheControl: max-age=3600, no-transform, public
+      gzip: false
+    - pattern: "^.+\\.(html|xml|json)$"
+      gzip: true
+
 markup:
   goldmark:
     renderer:
